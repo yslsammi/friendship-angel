@@ -106,8 +106,8 @@
     }
 
     .progress-dot {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       border: 3px solid var(--card-border);
       background-color: transparent;
@@ -489,7 +489,7 @@
       background-color: var(--panel-bg);
       color: #FFFFFF;
       width: 100%;
-      max-width: 840px;
+      max-width: 860px;
       max-height: 88dvh;
       overflow-y: auto;
       border-radius: 22px;
@@ -543,11 +543,26 @@
     }
 
     .setting-group label {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-weight: 800;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
       font-size: 1.02rem;
       color: #EFEFEF;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .select-all-mini-btn {
+      background: #00E5FF;
+      color: #000000;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     .btn-group, .scene-check-grid {
@@ -623,7 +638,7 @@
   <!-- 頂部狀態欄 -->
   <div id="top-bar">
     <div class="top-badges-left">
-      <div class="status-pill" id="topic-badge">主題 1 / 6</div>
+      <div class="status-pill" id="topic-badge">主題 1 / 10</div>
     </div>
     <div id="progress-bar-container"></div>
     <button type="button" id="replay-speech-btn">🔊 再聽故事</button>
@@ -651,7 +666,7 @@
     <div class="trophy-icon">👼💛</div>
     <div class="start-title">友好小天使 Friendship Angel</div>
     <div class="start-desc">
-      大班社交禮儀互動課！<br/>
+      大班社交禮儀互動課（共 10 個社交故事）！<br/>
       先一齊睇圖畫、聽故事介紹，角色扮演後再撳掣揀出好方法！
     </div>
     <div class="start-actions-row">
@@ -693,9 +708,12 @@
         </div>
       </div>
 
-      <!-- 1. 選擇要練習的社交課題（可多選） -->
+      <!-- 1. 選擇要練習的社交課題（共 10 個課題，可多選） -->
       <div class="setting-group">
-        <label>1. 課堂練習的社交故事課題（可自由勾選或全選）</label>
+        <label>
+          <span>1. 課堂練習的社交故事課題（共 10 題，可自由勾選）</span>
+          <button type="button" class="select-all-mini-btn" id="select-all-scenes-btn">✅ 全選 10 題</button>
+        </label>
         <div class="scene-check-grid" id="scene-selector">
           <button type="button" class="scene-toggle-btn active" data-scene="greet">👋 1. 主動打招呼</button>
           <button type="button" class="scene-toggle-btn active" data-scene="join">🧱 2. 禮貌問一齊玩</button>
@@ -703,6 +721,10 @@
           <button type="button" class="scene-toggle-btn active" data-scene="comfort">🩹 4. 安慰跌倒朋友</button>
           <button type="button" class="scene-toggle-btn active" data-scene="borrow">🖍️ 5. 有禮貌借東西</button>
           <button type="button" class="scene-toggle-btn active" data-scene="share">🍪 6. 大方分享食物</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="taketurns_car">🚗 7. 輪流玩玩具車</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="apologize">🙇‍♂️ 8. 撞到講對唔住</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="thank_gift">🎁 9. 收禮物講唔該</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="tidy_up">🧸 10. 合作收拾玩具</button>
         </div>
       </div>
 
@@ -710,7 +732,7 @@
       <div class="setting-group">
         <label>2. 出題順序</label>
         <div class="btn-group" data-setting="orderMode">
-          <button type="button" class="opt-btn active" data-val="sequential">按故事順序（由第 1 題至第 6 題，適合大班循序講解）</button>
+          <button type="button" class="opt-btn active" data-val="sequential">按故事順序（由第 1 題至第 10 題，適合大班循序講解）</button>
           <button type="button" class="opt-btn" data-val="random">隨機抽題（適合小組搶答複習）</button>
         </div>
       </div>
@@ -741,7 +763,7 @@
   </div>
 
   <script>
-    // === 6 幅全彩大型高清 SVG 社交故事插畫資料庫（含詳細圖片情境口語介紹） ===
+    // === 10 幅全彩大型高清 SVG 社交故事插畫資料庫 ===
     const SOCIAL_SCENES = [
       {
         id: 'greet',
@@ -756,15 +778,13 @@
             icon: '👋😄',
             text: '笑住揮手講：「早晨呀！」',
             spokenText: '笑住揮手講：早晨呀！',
-            isCorrect: true,
-            color: '#FFFF00'
+            isCorrect: true
           },
           {
             icon: '🙈😒',
             text: '低頭行開，唔理同學',
             spokenText: '低頭行開，唔理同學。',
-            isCorrect: false,
-            color: '#00E5FF'
+            isCorrect: false
           }
         ],
         svg: `
@@ -832,15 +852,13 @@
             icon: '🙋‍♂️😊',
             text: '「唔該，可唔可以一齊玩呀？」',
             spokenText: '唔該，可唔可以一齊玩呀？',
-            isCorrect: true,
-            color: '#FFFF00'
+            isCorrect: true
           },
           {
             icon: '😤🖐️',
             text: '唔出聲直接搶走佢啲積木',
             spokenText: '唔出聲直接搶走佢啲積木。',
-            isCorrect: false,
-            color: '#00E5FF'
+            isCorrect: false
           }
         ],
         svg: `
@@ -893,15 +911,13 @@
             icon: '🚶‍♂️⏳',
             text: '排喺後面，等一等輪流玩',
             spokenText: '排喺後面，等一等輪流玩。',
-            isCorrect: true,
-            color: '#FFFF00'
+            isCorrect: true
           },
           {
             icon: '🏃‍♂️💥',
             text: '推開前面嘅同學衝上去',
             spokenText: '推開前面嘅同學衝上去。',
-            isCorrect: false,
-            color: '#00E5FF'
+            isCorrect: false
           }
         ],
         svg: `
@@ -957,15 +973,13 @@
             icon: '🤝💛',
             text: '行過去扶起佢，問：「你冇事嘛？」',
             spokenText: '行過去扶起佢，問：你冇事嘛？',
-            isCorrect: true,
-            color: '#FFFF00'
+            isCorrect: true
           },
           {
             icon: '😆👉',
             text: '指住佢大笑，唔幫佢',
             spokenText: '指住佢大笑，唔幫佢。',
-            isCorrect: false,
-            color: '#00E5FF'
+            isCorrect: false
           }
         ],
         svg: `
@@ -1016,15 +1030,13 @@
             icon: '🙏🖍️',
             text: '「唔該，可唔可以借支蠟筆俾我呀？」',
             spokenText: '唔該，可唔可以借支蠟筆俾我呀？',
-            isCorrect: true,
-            color: '#FFFF00'
+            isCorrect: true
           },
           {
             icon: '🫳⚡',
             text: '唔問一聲就自己拎走',
             spokenText: '唔問一聲就自己拎走。',
-            isCorrect: false,
-            color: '#00E5FF'
+            isCorrect: false
           }
         ],
         svg: `
@@ -1075,15 +1087,13 @@
             icon: '🍪💖',
             text: '分一塊俾好朋友，大家一齊食',
             spokenText: '分一塊俾好朋友，大家一齊食。',
-            isCorrect: true,
-            color: '#FFFF00'
+            isCorrect: true
           },
           {
             icon: '🙅‍♂️🍪',
             text: '自己食晒兩塊，唔分俾朋友',
             spokenText: '自己食晒兩塊，唔分俾朋友。',
-            isCorrect: false,
-            color: '#00E5FF'
+            isCorrect: false
           }
         ],
         svg: `
@@ -1124,14 +1134,267 @@
             <text x="400" y="78" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">一人一塊齊分享 🍪</text>
           </svg>
         `
+      },
+      {
+        id: 'taketurns_car',
+        shortTitle: '輪流玩玩具車',
+        storyIntro: '睇下幅圖：遊戲角嘅地墊上面得一架好靚嘅紅色玩具車，兩個小朋友都好想玩。',
+        question: '得一架玩具車，兩個小朋友都想玩，應該點做？',
+        speechIntro: '睇下幅圖：遊戲角嘅地墊上面得一架好靚嘅紅色玩具車，兩個小朋友都好想玩。得一架車應該點做呀？諗好就撳「開始選擇」啦！',
+        praiseSpeech: '做得好！你玩一陣、我玩一陣，輪流玩玩具車最開心！',
+        retrySpeech: '兩個人鬥搶會整爛玩具車㗎，試下揀另一個好方法啦！',
+        options: [
+          {
+            icon: '🚗🔄',
+            text: '「你玩一陣，再輪到我玩啦！」',
+            spokenText: '你玩一陣，再輪到我玩啦！',
+            isCorrect: true
+          },
+          {
+            icon: '😠🚗',
+            text: '大力扯住架車唔肯放手',
+            spokenText: '大力扯住架車唔肯放手。',
+            isCorrect: false
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="285" fill="#EDE9FE"/>
+            <rect y="285" width="800" height="135" fill="#A78BFA"/>
+            <line x1="0" y1="285" x2="800" y2="285" stroke="#000000" stroke-width="6"/>
+            <ellipse cx="400" cy="348" rx="260" ry="52" fill="#FDE047" stroke="#000000" stroke-width="5"/>
+
+            <!-- 中間紅色大玩具車 -->
+            <g transform="translate(320, 250)">
+              <rect x="10" y="25" width="140" height="44" rx="14" fill="#EF4444" stroke="#000000" stroke-width="6"/>
+              <path d="M32 25 L52 -4 L108 -4 L128 25 Z" fill="#60A5FA" stroke="#000000" stroke-width="6"/>
+              <circle cx="42" cy="70" r="20" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="42" cy="70" r="8" fill="#E2E8F0"/>
+              <circle cx="118" cy="70" r="20" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="118" cy="70" r="8" fill="#E2E8F0"/>
+            </g>
+
+            <!-- 左邊小朋友 -->
+            <g transform="translate(200, 215)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#3B82F6" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-14 18 Q0 30 14 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- 右邊小朋友 -->
+            <g transform="translate(600, 215)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#F97316" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-14 18 Q0 30 14 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- 輪流箭咀標誌 -->
+            <rect x="275" y="52" width="250" height="56" rx="24" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="400" y="89" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">你一次、我一次 🔄</text>
+          </svg>
+        `
+      },
+      {
+        id: 'apologize',
+        shortTitle: '撞到講對唔住',
+        storyIntro: '睇下幅圖：喺走廊行路嘅時候，左邊嘅小朋友唔小心撞到右邊嘅同學，同學差啲跌親。',
+        question: '唔小心撞到同學，你應該點講？',
+        speechIntro: '睇下幅圖：喺走廊行路嘅時候，左邊嘅小朋友唔小心撞到右邊嘅同學。唔小心撞到人應該點講呀？諗好就撳「開始選擇」啦！',
+        praiseSpeech: '做得好！主動停低講對唔住，同學一定會原諒你！',
+        retrySpeech: '撞到人唔可以扮睇唔到走開㗎，試下揀另一個好方法啦！',
+        options: [
+          {
+            icon: '🙇‍♂️💛',
+            text: '「對唔住呀，你有冇事呀？」',
+            spokenText: '對唔住呀，你有冇事呀？',
+            isCorrect: true
+          },
+          {
+            icon: '🏃‍♂️💨',
+            text: '當睇唔到，即刻跑走',
+            spokenText: '當睇唔到，即刻跑走。',
+            isCorrect: false
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="295" fill="#FEF9C3"/>
+            <rect y="295" width="800" height="125" fill="#CBD5E1"/>
+            <line x1="0" y1="295" x2="800" y2="295" stroke="#000000" stroke-width="6"/>
+
+            <!-- 碰撞星芒符號 -->
+            <polygon points="400,150 412,175 438,175 418,192 426,218 400,202 374,218 382,192 362,175 388,175" fill="#FACC15" stroke="#000000" stroke-width="4"/>
+
+            <!-- 左邊不小心撞到人的小朋友（舉手致歉） -->
+            <g transform="translate(295, 220)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#10B981" stroke="#000000" stroke-width="6"/>
+              <path d="M30 56 L68 42" stroke="#FDE68A" stroke-width="18" stroke-linecap="round"/>
+              <path d="M30 56 L68 42" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <ellipse cx="0" cy="20" rx="8" ry="10" fill="#EF4444" stroke="#000000" stroke-width="4"/>
+            </g>
+
+            <!-- 右邊被撞到的同學（驚訝表情） -->
+            <g transform="translate(505, 225) rotate(8)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#EC4899" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="0" r="7" fill="#000000"/>
+              <circle cx="14" cy="0" r="7" fill="#000000"/>
+              <path d="M-12 22 Q0 14 12 22" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <rect x="275" y="48" width="250" height="56" rx="24" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="400" y="85" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">對唔住！🙇‍♂️</text>
+          </svg>
+        `
+      },
+      {
+        id: 'thank_gift',
+        shortTitle: '收禮物講唔該',
+        storyIntro: '睇下幅圖：今日係生日會，左邊嘅好朋友雙手捧住一份綁住蝴蝶結嘅禮物盒送俾你。',
+        question: '好朋友送小禮物俾你，你應該點做？',
+        speechIntro: '睇下幅圖：今日係生日會，左邊嘅好朋友雙手捧住一份綁住蝴蝶結嘅禮物盒送俾你。收到朋友禮物應該點做呀？諗好就撳「開始選擇」啦！',
+        praiseSpeech: '做得好！雙手接過禮物並笑住講唔該晒，朋友好開心呀！',
+        retrySpeech: '收到禮物唔講多謝又嫌棄會令朋友傷心㗎，試下揀另一個好方法啦！',
+        options: [
+          {
+            icon: '🎁😊',
+            text: '雙手接過，笑住講：「唔該晒！」',
+            spokenText: '雙手接過，笑住講：唔該晒！',
+            isCorrect: true
+          },
+          {
+            icon: '😒👎',
+            text: '唔講多謝，仲話份禮物唔靚',
+            spokenText: '唔講多謝，仲話份禮物唔靚。',
+            isCorrect: false
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="295" fill="#FCE7F3"/>
+            <rect y="295" width="800" height="125" fill="#F472B6"/>
+            <line x1="0" y1="295" x2="800" y2="295" stroke="#000000" stroke-width="6"/>
+
+            <!-- 彩旗裝飾 -->
+            <polygon points="160,0 200,45 240,0" fill="#FACC15" stroke="#000000" stroke-width="4"/>
+            <polygon points="360,0 400,45 440,0" fill="#38BDF8" stroke="#000000" stroke-width="4"/>
+            <polygon points="560,0 600,45 640,0" fill="#4ADE80" stroke="#000000" stroke-width="4"/>
+
+            <!-- 左邊送禮物的朋友 -->
+            <g transform="translate(235, 220)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#8B5CF6" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-15 18 Q0 32 15 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- 中間大禮物盒 -->
+            <g transform="translate(352, 232)">
+              <rect x="0" y="18" width="96" height="80" rx="10" fill="#FACC15" stroke="#000000" stroke-width="6"/>
+              <rect x="-6" y="4" width="108" height="22" rx="8" fill="#EF4444" stroke="#000000" stroke-width="5"/>
+              <rect x="38" y="4" width="20" height="94" fill="#EF4444" stroke="#000000" stroke-width="4"/>
+              <ellipse cx="34" cy="-6" rx="16" ry="10" fill="#EF4444" stroke="#000000" stroke-width="4"/>
+              <ellipse cx="62" cy="-6" rx="16" ry="10" fill="#EF4444" stroke="#000000" stroke-width="4"/>
+            </g>
+
+            <!-- 右邊收禮物的小朋友 -->
+            <g transform="translate(565, 220)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#3B82F6" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-15 18 Q0 32 15 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <rect x="285" y="72" width="230" height="54" rx="24" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="400" y="108" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">送俾你！🎁</text>
+          </svg>
+        `
+      },
+      {
+        id: 'tidy_up',
+        shortTitle: '合作收拾玩具',
+        storyIntro: '睇下幅圖：自由遊戲時間完啦，地上散滿積木同小熊公仔，中間擺住一個藍色大玩具箱。',
+        question: '玩完玩具要執拾課室啦，你會點做？',
+        speechIntro: '睇下幅圖：自由遊戲時間完啦，地上散滿積木同小熊公仔，中間擺住一個藍色大玩具箱。玩完玩具應該點做呀？諗好就撳「開始選擇」啦！',
+        praiseSpeech: '做得好！同同學一齊合作收拾玩具，課室又乾淨又整齊！',
+        retrySpeech: '留低所有玩具俾同學一個人執唔公平㗎，試下揀另一個好方法啦！',
+        options: [
+          {
+            icon: '🧸📦',
+            text: '同同學一齊執玩具放返入箱',
+            spokenText: '同同學一齊執玩具放返入箱。',
+            isCorrect: true
+          },
+          {
+            icon: '🛋️🙈',
+            text: '走去坐埋一邊，留俾同學自己執',
+            spokenText: '走去坐埋一邊，留俾同學自己執。',
+            isCorrect: false
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="295" fill="#DCFCE7"/>
+            <rect y="295" width="800" height="125" fill="#FDE68A"/>
+            <line x1="0" y1="295" x2="800" y2="295" stroke="#000000" stroke-width="6"/>
+
+            <!-- 中間藍色大玩具箱 -->
+            <rect x="330" y="255" width="140" height="90" rx="14" fill="#2563EB" stroke="#000000" stroke-width="6"/>
+            <rect x="320" y="242" width="160" height="22" rx="8" fill="#60A5FA" stroke="#000000" stroke-width="5"/>
+            <text x="400" y="312" font-size="24" font-weight="900" text-anchor="middle" fill="#FFFFFF">玩具箱</text>
+
+            <!-- 地上的積木與球 -->
+            <rect x="255" y="318" width="42" height="42" rx="6" fill="#EF4444" stroke="#000000" stroke-width="4"/>
+            <circle cx="515" cy="336" r="24" fill="#FACC15" stroke="#000000" stroke-width="4"/>
+
+            <!-- 左邊收拾玩具的小朋友 -->
+            <g transform="translate(205, 215)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#F97316" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-15 18 Q0 32 15 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- 右邊一起合作收拾的同學 -->
+            <g transform="translate(595, 215)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#10B981" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-15 18 Q0 32 15 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <rect x="265" y="52" width="270" height="56" rx="24" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="400" y="89" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">一齊合作執玩具 📦</text>
+          </svg>
+        `
       }
     ];
 
-    const STORAGE_KEY = 'friendship_angel_v3';
+    const ALL_SCENE_IDS = SOCIAL_SCENES.map(s => s.id);
+    const STORAGE_KEY = 'friendship_angel_v4';
 
     let state = {
       settings: {
-        enabledScenes: ['greet', 'join', 'queue', 'comfort', 'borrow', 'share'],
+        enabledScenes: [...ALL_SCENE_IDS],
         orderMode: 'sequential',
         advanceMode: 'manual',
         theme: 'dark'
@@ -1166,7 +1429,7 @@
       currentScene: null,
       hadMistakeThisQuestion: false,
       isAnswered: false,
-      isEvaluatingChoice: false, // 正在朗讀所選選項內容時鎖定重複點擊
+      isEvaluatingChoice: false,
       choicesRevealed: false,
       autoNextTimer: null
     };
@@ -1182,7 +1445,7 @@
 
     loadState();
 
-    // === 音效與廣東話語音引擎（支援朗讀完成回調 onComplete） ===
+    // === 音效與廣東話語音引擎 ===
     let audioCtx = null;
 
     function initAudio() {
@@ -1278,7 +1541,6 @@
         if (onComplete) onComplete();
       };
 
-      // 安全超時保護：若 iPad 靜音或語音引擎未觸發 onend，仍保證按時執行後續判斷
       const estimatedMs = Math.max(1600, String(text).length * 240 + 700);
       if (onComplete) {
         fallbackCallbackTimer = setTimeout(fireOnce, estimatedMs);
@@ -1344,11 +1606,9 @@
       topicBadge.textContent = `主題 ${runtime.currentIndex + 1} / ${runtime.activeQueue.length}：${scene.shortTitle}`;
       updateProgressDots();
 
-      // 顯示圖片情境介紹，讓老師先帶領角色扮演
       questionBanner.textContent = `🖼️ ${scene.storyIntro}`;
       storyBox.innerHTML = scene.svg;
 
-      // 先顯示「👉 開始選擇」按鈕，暫時隱藏兩個選項
       choicesRow.style.display = 'none';
       choicesRow.innerHTML = '';
       revealChoicesBtn.style.display = 'inline-block';
@@ -1366,7 +1626,6 @@
       const scene = runtime.currentScene;
       questionBanner.textContent = `❓ ${scene.question}`;
 
-      // 隨機左右分配，確保左邊固定亮黃框、右邊固定青藍框，視覺分明且距離寬闊
       const shuffledOptions = [...scene.options].sort(() => Math.random() - 0.5);
       const sideColors = ['#FFFF00', '#00E5FF'];
 
@@ -1395,14 +1654,12 @@
 
       runtime.isEvaluatingChoice = true;
 
-      // 清除其他按鈕的狀態，先高亮並放大目前被點擊的選項
       choicesRow.querySelectorAll('.choice-btn').forEach(b => {
         b.classList.remove('reading-now', 'gentle-shake');
       });
       btnEl.classList.add('reading-now');
       questionBanner.textContent = `🗣️ 「${opt.text}」`;
 
-      // 第一階段語音：先清晰讀出學生所選選項的內容
       speakCantonese(opt.spokenText, () => {
         btnEl.classList.remove('reading-now');
         evaluateSelectedOption(opt, btnEl);
@@ -1570,6 +1827,12 @@
 
     document.getElementById('teacher-trigger').addEventListener('click', openTeacherPanel);
     document.getElementById('open-setup-from-start-btn').addEventListener('click', openTeacherPanel);
+
+    document.getElementById('select-all-scenes-btn').addEventListener('click', () => {
+      state.settings.enabledScenes = [...ALL_SCENE_IDS];
+      applySettingsUI();
+      saveState();
+    });
 
     document.querySelectorAll('.scene-toggle-btn').forEach(btn => {
       btn.addEventListener('click', () => {
