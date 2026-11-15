@@ -171,24 +171,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 66px 16px 16px 16px;
-      gap: 10px;
+      padding: 66px 18px 18px 18px;
+      gap: 12px;
       overflow: hidden;
     }
 
-    /* 情境題目橫幅 */
+    /* 故事介紹與題目橫幅 */
     #question-banner {
       width: 100%;
-      max-width: 1180px;
+      max-width: 1220px;
       background-color: var(--card-bg);
       border: 5px solid var(--card-border);
       border-radius: 24px;
-      padding: 10px 20px;
+      padding: 12px 22px;
       text-align: center;
-      font-size: clamp(1.35rem, 2.7vw, 2.2rem);
+      font-size: clamp(1.3rem, 2.5vw, 2.1rem);
       font-weight: 900;
       color: var(--text-color);
-      line-height: 1.3;
+      line-height: 1.35;
       flex-shrink: 0;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     }
@@ -196,7 +196,7 @@
     /* 大型全彩 SVG 故事插畫框 */
     #story-illustration-box {
       width: 100%;
-      max-width: 780px;
+      max-width: 760px;
       flex: 1;
       min-height: 0;
       background-color: #131B2E;
@@ -222,63 +222,111 @@
       display: block;
     }
 
-    /* 兩個特大圖文選擇按鈕區 */
-    #choices-row {
+    /* === 底部互動區域（階段一：開始選擇按鈕 / 階段二：大幅分開的兩個選項） === */
+    #bottom-action-area {
       width: 100%;
-      max-width: 1180px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(12px, 2.2vw, 26px);
+      max-width: 1320px;
+      min-height: 118px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
+      padding: 0 6px;
     }
 
-    @media (max-width: 720px) {
+    /* 階段一：「開始選擇」特大按鈕（方便老師先做角色扮演再出示選項） */
+    #reveal-choices-btn {
+      background: #00FF66;
+      color: #000000;
+      border: 6px solid #FFFFFF;
+      border-radius: 32px;
+      padding: 20px 54px;
+      font-size: clamp(1.55rem, 3vw, 2.3rem);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 0 36px rgba(0, 255, 102, 0.75), 0 8px 24px rgba(0, 0, 0, 0.6);
+      letter-spacing: 2px;
+      transition: transform 0.14s ease;
+    }
+
+    #reveal-choices-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* 階段二：兩個選項大幅拉開距離（左右靠邊，中間保留特大空白分隔） */
+    #choices-row {
+      width: 100%;
+      display: none;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: clamp(48px, 10vw, 150px);
+    }
+
+    .choice-btn {
+      flex: 1;
+      max-width: 44%;
+      background-color: var(--card-bg);
+      border: 8px solid var(--btn-accent, #FFFF00);
+      border-radius: 30px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 16px;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
+      transition: transform 0.16s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.25s ease, box-shadow 0.2s ease;
+      text-align: left;
+    }
+
+    @media (max-width: 760px) {
       #choices-row {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .choice-btn {
+        max-width: 100%;
       }
       #main-container {
         padding-top: 98px;
       }
     }
 
-    .choice-btn {
-      background-color: var(--card-bg);
-      border: 7px solid var(--btn-accent, #FFFF00);
-      border-radius: 26px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 14px;
-      cursor: pointer;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
-      transition: transform 0.14s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.25s ease;
-      text-align: left;
-    }
-
     .choice-btn:active {
       transform: scale(0.96);
     }
 
+    /* 正在朗讀該選項內容時的發光高亮狀態 */
+    .choice-btn.reading-now {
+      background-color: #FFF59D !important;
+      border-color: #FFFFFF !important;
+      transform: scale(1.04);
+      box-shadow: 0 0 50px rgba(255, 255, 0, 0.95);
+    }
+
+    .choice-btn.reading-now .choice-text {
+      color: #000000 !important;
+    }
+
     .choice-icon {
-      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      font-size: clamp(2.6rem, 4.8vw, 3.8rem);
       line-height: 1;
       flex-shrink: 0;
     }
 
     .choice-text {
-      font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+      font-size: clamp(1.25rem, 2.2vw, 1.8rem);
       font-weight: 900;
       color: var(--subtext-color);
-      line-height: 1.3;
+      line-height: 1.35;
     }
 
     /* 答對與答錯狀態 */
     .choice-btn.correct-selected {
       background-color: #00FF66 !important;
       border-color: #FFFFFF !important;
-      transform: scale(1.03);
-      box-shadow: 0 0 45px rgba(0, 255, 102, 0.9);
+      transform: scale(1.04);
+      box-shadow: 0 0 50px rgba(0, 255, 102, 0.95);
     }
 
     .choice-btn.correct-selected .choice-text {
@@ -286,7 +334,7 @@
     }
 
     .choice-btn.faded-out {
-      opacity: 0.25;
+      opacity: 0.22;
       pointer-events: none;
     }
 
@@ -305,7 +353,7 @@
     /* === 過關後「➡️ 下一題」特大按鈕 === */
     #next-question-bar {
       position: fixed;
-      bottom: 18px;
+      bottom: 22px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 40;
@@ -317,8 +365,8 @@
       color: #000000;
       border: 5px solid #000000;
       border-radius: 28px;
-      padding: 14px 38px;
-      font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+      padding: 15px 40px;
+      font-size: clamp(1.4rem, 2.6vw, 1.95rem);
       font-weight: 900;
       cursor: pointer;
       box-shadow: 0 0 34px rgba(0, 255, 102, 0.95), 0 8px 24px rgba(0, 0, 0, 0.7);
@@ -370,8 +418,8 @@
     .start-desc {
       font-size: clamp(1.15rem, 2.2vw, 1.5rem);
       color: #FFFFFF;
-      max-width: 680px;
-      line-height: 1.6;
+      max-width: 720px;
+      line-height: 1.65;
       margin-bottom: 24px;
     }
 
@@ -578,14 +626,19 @@
       <div class="status-pill" id="topic-badge">主題 1 / 6</div>
     </div>
     <div id="progress-bar-container"></div>
-    <button type="button" id="replay-speech-btn">🔊 讀題目</button>
+    <button type="button" id="replay-speech-btn">🔊 再聽故事</button>
   </div>
 
   <!-- 主遊戲舞台 -->
   <div id="main-container">
     <div id="question-banner">載入中...</div>
     <div id="story-illustration-box"></div>
-    <div id="choices-row"></div>
+
+    <!-- 底部區域：先按「👉 開始選擇」，再出現大幅分開的兩個選項 -->
+    <div id="bottom-action-area">
+      <button type="button" id="reveal-choices-btn">👉 開始選擇</button>
+      <div id="choices-row"></div>
+    </div>
   </div>
 
   <!-- 過關後「➡️ 下一題」特大按鈕 -->
@@ -598,8 +651,8 @@
     <div class="trophy-icon">👼💛</div>
     <div class="start-title">友好小天使 Friendship Angel</div>
     <div class="start-desc">
-      大班社交禮儀互動課！一齊睇圖畫、聽故事，<br/>
-      揀出最有禮貌、最識交朋友嘅好方法啦！
+      大班社交禮儀互動課！<br/>
+      先一齊睇圖畫、聽故事介紹，角色扮演後再撳掣揀出好方法！
     </div>
     <div class="start-actions-row">
       <button type="button" class="big-start-btn" id="start-game-btn">開始上課</button>
@@ -688,25 +741,28 @@
   </div>
 
   <script>
-    // === 6 幅全彩大型高清 SVG 社交故事插畫資料庫 ===
+    // === 6 幅全彩大型高清 SVG 社交故事插畫資料庫（含詳細圖片情境口語介紹） ===
     const SOCIAL_SCENES = [
       {
         id: 'greet',
         shortTitle: '主動打招呼',
+        storyIntro: '睇下幅圖：太陽伯伯出嚟啦，兩個小朋友早晨返到學校門口見到面。',
         question: '早晨返到學校見到同學，你會點做？',
-        speechQuestion: '早晨返到學校見到同學，你會點做呀？',
+        speechIntro: '睇下幅圖：太陽伯伯出嚟啦，兩個小朋友早晨返到學校門口見到面。你會點做呀？諗好就撳下面「開始選擇」啦！',
         praiseSpeech: '做得好！笑住揮手講早晨，同學好開心呀！',
-        retrySpeech: '唔好避開呀，試下笑住同同學講早晨啦！',
+        retrySpeech: '唔好避開呀，試下揀另一個好方法啦！',
         options: [
           {
             icon: '👋😄',
             text: '笑住揮手講：「早晨呀！」',
+            spokenText: '笑住揮手講：早晨呀！',
             isCorrect: true,
-            color: '#00FF66'
+            color: '#FFFF00'
           },
           {
             icon: '🙈😒',
             text: '低頭行開，唔理同學',
+            spokenText: '低頭行開，唔理同學。',
             isCorrect: false,
             color: '#00E5FF'
           }
@@ -766,20 +822,23 @@
       {
         id: 'join',
         shortTitle: '禮貌問一齊玩',
-        question: '見到同學喺度玩彩色積木，你想加入一齊玩，應該點講？',
-        speechQuestion: '見到同學喺度玩彩色積木，你想加入一齊玩，應該點講呀？',
+        storyIntro: '睇下幅圖：右邊嘅同學喺地墊上面砌緊彩色大積木，左邊嘅小朋友行埋去好想一齊玩。',
+        question: '見到同學玩緊積木，你想加入一齊玩，應該點做？',
+        speechIntro: '睇下幅圖：右邊嘅同學喺地墊上面砌緊彩色大積木，左邊嘅小朋友行埋去好想一齊玩。你想加入一齊玩，應該點做呀？諗好就撳「開始選擇」啦！',
         praiseSpeech: '做得好！有禮貌問可唔可以一齊玩，大家最鍾意同你做朋友！',
-        retrySpeech: '直接搶積木會令朋友唔開心，試下有禮貌咁問佢啦！',
+        retrySpeech: '直接搶積木會令朋友唔開心，試下揀另一個好方法啦！',
         options: [
           {
             icon: '🙋‍♂️😊',
             text: '「唔該，可唔可以一齊玩呀？」',
+            spokenText: '唔該，可唔可以一齊玩呀？',
             isCorrect: true,
-            color: '#00FF66'
+            color: '#FFFF00'
           },
           {
             icon: '😤🖐️',
             text: '唔出聲直接搶走佢啲積木',
+            spokenText: '唔出聲直接搶走佢啲積木。',
             isCorrect: false,
             color: '#00E5FF'
           }
@@ -824,20 +883,23 @@
       {
         id: 'queue',
         shortTitle: '排隊輪流玩',
+        storyIntro: '睇下幅圖：公園游樂場有張橙色大滑梯，前面已經有兩個小朋友排緊隊等玩。',
         question: '游樂場好多人排隊玩滑梯，你應該點做？',
-        speechQuestion: '游樂場好多人排隊玩滑梯，你應該點做呀？',
+        speechIntro: '睇下幅圖：公園游樂場有張橙色大滑梯，前面已經有兩個小朋友排緊隊等玩。你去到滑梯前面應該點做呀？諗好就撳「開始選擇」啦！',
         praiseSpeech: '做得好！乖乖排隊輪流玩，既安全又守規矩！',
-        retrySpeech: '推開前面嘅同學好危險呀，試下排喺後面等一等啦！',
+        retrySpeech: '推開前面嘅同學好危險呀，試下揀另一個好方法啦！',
         options: [
           {
             icon: '🚶‍♂️⏳',
             text: '排喺後面，等一等輪流玩',
+            spokenText: '排喺後面，等一等輪流玩。',
             isCorrect: true,
-            color: '#00FF66'
+            color: '#FFFF00'
           },
           {
             icon: '🏃‍♂️💥',
             text: '推開前面嘅同學衝上去',
+            spokenText: '推開前面嘅同學衝上去。',
             isCorrect: false,
             color: '#00E5FF'
           }
@@ -885,20 +947,23 @@
       {
         id: 'comfort',
         shortTitle: '安慰跌倒朋友',
+        storyIntro: '睇下幅圖：右邊嘅好朋友唔小心跌倒坐喺草地上，痛到流眼淚喊緊，左邊嘅小朋友見到佢。',
         question: '好朋友唔小心跌倒喺地上喊，你會點做？',
-        speechQuestion: '好朋友唔小心跌倒喺地上喊，你會點做呀？',
+        speechIntro: '睇下幅圖：右邊嘅好朋友唔小心跌倒坐喺草地上，痛到流眼淚喊緊。你見到佢跌倒會點做呀？諗好就撳「開始選擇」啦！',
         praiseSpeech: '做得好！上前關心同扶起朋友，你真係好有愛心！',
-        retrySpeech: '朋友跌倒好痛㗎，唔好笑佢，過去扶起佢同安慰佢啦！',
+        retrySpeech: '朋友跌倒好痛㗎，唔好笑佢，試下揀另一個好方法啦！',
         options: [
           {
             icon: '🤝💛',
             text: '行過去扶起佢，問：「你冇事嘛？」',
+            spokenText: '行過去扶起佢，問：你冇事嘛？',
             isCorrect: true,
-            color: '#00FF66'
+            color: '#FFFF00'
           },
           {
             icon: '😆👉',
             text: '指住佢大笑，唔幫佢',
+            spokenText: '指住佢大笑，唔幫佢。',
             isCorrect: false,
             color: '#00E5FF'
           }
@@ -941,20 +1006,23 @@
       {
         id: 'borrow',
         shortTitle: '有禮貌借東西',
+        storyIntro: '睇下幅圖：兩個小朋友坐喺書枱前面畫畫，枱面有一支屬於同學嘅藍色蠟筆。',
         question: '你想用同學枱面支藍色蠟筆畫畫，應該點做？',
-        speechQuestion: '你想用同學枱面支藍色蠟筆畫畫，應該點做呀？',
+        speechIntro: '睇下幅圖：兩個小朋友坐喺書枱前面畫畫，枱面有一支屬於同學嘅藍色蠟筆。你想借支藍色蠟筆嚟用，應該點做呀？諗好就撳「開始選擇」啦！',
         praiseSpeech: '做得好！先問准同學先至借用，好有禮貌呀！',
-        retrySpeech: '未問准就拎走人哋嘅嘢唔啱㗎，試下先問一聲同學啦！',
+        retrySpeech: '未問准就拎走人哋嘅嘢唔啱㗎，試下揀另一個好方法啦！',
         options: [
           {
             icon: '🙏🖍️',
             text: '「唔該，可唔可以借支蠟筆俾我呀？」',
+            spokenText: '唔該，可唔可以借支蠟筆俾我呀？',
             isCorrect: true,
-            color: '#00FF66'
+            color: '#FFFF00'
           },
           {
             icon: '🫳⚡',
             text: '唔問一聲就自己拎走',
+            spokenText: '唔問一聲就自己拎走。',
             isCorrect: false,
             color: '#00E5FF'
           }
@@ -997,20 +1065,23 @@
       {
         id: 'share',
         shortTitle: '大方分享食物',
-        question: '茶點時間你有兩塊香噴噴嘅曲奇餅，好朋友冇帶茶點，你會點做？',
-        speechQuestion: '茶點時間你有兩塊曲奇餅，好朋友冇帶茶點，你會點做呀？',
+        storyIntro: '睇下幅圖：茶點時間，白色碟上面有兩塊香噴噴嘅朱古力曲奇餅，隔離坐住好朋友。',
+        question: '你有兩塊曲奇餅，好朋友冇帶茶點，你會點做？',
+        speechIntro: '睇下幅圖：茶點時間，白色碟上面有兩塊香噴噴嘅朱古力曲奇餅，隔離坐住好朋友，但佢冇帶茶點。你會點做呀？諗好就撳「開始選擇」啦！',
         praiseSpeech: '做得好！識得同好朋友一齊分享，兩個人都好開心！',
-        retrySpeech: '好朋友冇茶點好肚餓㗎，試下分一塊曲奇餅俾佢一齊食啦！',
+        retrySpeech: '好朋友冇茶點好肚餓㗎，試下揀另一個好方法啦！',
         options: [
           {
             icon: '🍪💖',
             text: '分一塊俾好朋友，大家一齊食',
+            spokenText: '分一塊俾好朋友，大家一齊食。',
             isCorrect: true,
-            color: '#00FF66'
+            color: '#FFFF00'
           },
           {
             icon: '🙅‍♂️🍪',
             text: '自己食晒兩塊，唔分俾朋友',
+            spokenText: '自己食晒兩塊，唔分俾朋友。',
             isCorrect: false,
             color: '#00E5FF'
           }
@@ -1056,7 +1127,7 @@
       }
     ];
 
-    const STORAGE_KEY = 'friendship_angel_v2';
+    const STORAGE_KEY = 'friendship_angel_v3';
 
     let state = {
       settings: {
@@ -1095,11 +1166,14 @@
       currentScene: null,
       hadMistakeThisQuestion: false,
       isAnswered: false,
+      isEvaluatingChoice: false, // 正在朗讀所選選項內容時鎖定重複點擊
+      choicesRevealed: false,
       autoNextTimer: null
     };
 
     const questionBanner = document.getElementById('question-banner');
     const storyBox = document.getElementById('story-illustration-box');
+    const revealChoicesBtn = document.getElementById('reveal-choices-btn');
     const choicesRow = document.getElementById('choices-row');
     const topicBadge = document.getElementById('topic-badge');
     const progressBarContainer = document.getElementById('progress-bar-container');
@@ -1108,7 +1182,7 @@
 
     loadState();
 
-    // === 音效與廣東話語音引擎（加入完全容錯保護，避免 iPad Safari 卡死） ===
+    // === 音效與廣東話語音引擎（支援朗讀完成回調 onComplete） ===
     let audioCtx = null;
 
     function initAudio() {
@@ -1163,6 +1237,7 @@
 
     let cantoneseVoice = null;
     let speechTimer = null;
+    let fallbackCallbackTimer = null;
 
     function loadCantoneseVoice() {
       try {
@@ -1182,23 +1257,52 @@
       }
     } catch (e) {}
 
-    function speakCantonese(text) {
+    function speakCantonese(text, onComplete) {
+      if (speechTimer) clearTimeout(speechTimer);
+      if (fallbackCallbackTimer) clearTimeout(fallbackCallbackTimer);
+
+      if (!('speechSynthesis' in window) || !text) {
+        if (onComplete) setTimeout(onComplete, 900);
+        return;
+      }
+
       try {
-        if (!('speechSynthesis' in window) || !text) return;
-        if (speechTimer) clearTimeout(speechTimer);
         window.speechSynthesis.cancel();
-        speechTimer = setTimeout(() => {
-          try {
-            if (window.speechSynthesis.paused) window.speechSynthesis.resume();
-            const utter = new SpeechSynthesisUtterance(String(text));
-            utter.lang = 'zh-HK';
-            if (cantoneseVoice) utter.voice = cantoneseVoice;
-            utter.rate = 0.9;
-            utter.pitch = 1.15;
-            window.speechSynthesis.speak(utter);
-          } catch (err) {}
-        }, 50);
       } catch (e) {}
+
+      let callbackFired = false;
+      const fireOnce = () => {
+        if (callbackFired) return;
+        callbackFired = true;
+        if (fallbackCallbackTimer) clearTimeout(fallbackCallbackTimer);
+        if (onComplete) onComplete();
+      };
+
+      // 安全超時保護：若 iPad 靜音或語音引擎未觸發 onend，仍保證按時執行後續判斷
+      const estimatedMs = Math.max(1600, String(text).length * 240 + 700);
+      if (onComplete) {
+        fallbackCallbackTimer = setTimeout(fireOnce, estimatedMs);
+      }
+
+      speechTimer = setTimeout(() => {
+        try {
+          if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+          const utter = new SpeechSynthesisUtterance(String(text));
+          utter.lang = 'zh-HK';
+          if (cantoneseVoice) utter.voice = cantoneseVoice;
+          utter.rate = 0.88;
+          utter.pitch = 1.15;
+          utter.onend = () => {
+            setTimeout(fireOnce, 450);
+          };
+          utter.onerror = () => {
+            setTimeout(fireOnce, 450);
+          };
+          window.speechSynthesis.speak(utter);
+        } catch (err) {
+          fireOnce();
+        }
+      }, 50);
     }
 
     // === 建立題目隊列 ===
@@ -1217,7 +1321,7 @@
       runtime.currentIndex = 0;
     }
 
-    // === 載入目前情境題目 ===
+    // === 載入目前情境題目（第一步：先介紹圖片，顯示「👉 開始選擇」） ===
     function loadCurrentScene() {
       if (runtime.autoNextTimer) {
         clearTimeout(runtime.autoNextTimer);
@@ -1226,6 +1330,8 @@
       nextQuestionBar.style.display = 'none';
       runtime.hadMistakeThisQuestion = false;
       runtime.isAnswered = false;
+      runtime.isEvaluatingChoice = false;
+      runtime.choicesRevealed = false;
 
       if (runtime.currentIndex >= runtime.activeQueue.length) {
         showRoundComplete();
@@ -1238,36 +1344,77 @@
       topicBadge.textContent = `主題 ${runtime.currentIndex + 1} / ${runtime.activeQueue.length}：${scene.shortTitle}`;
       updateProgressDots();
 
-      questionBanner.textContent = scene.question;
+      // 顯示圖片情境介紹，讓老師先帶領角色扮演
+      questionBanner.textContent = `🖼️ ${scene.storyIntro}`;
       storyBox.innerHTML = scene.svg;
 
-      const shuffledOptions = [...scene.options].sort(() => Math.random() - 0.5);
+      // 先顯示「👉 開始選擇」按鈕，暫時隱藏兩個選項
+      choicesRow.style.display = 'none';
       choicesRow.innerHTML = '';
+      revealChoicesBtn.style.display = 'inline-block';
 
-      shuffledOptions.forEach(opt => {
+      speakCantonese(scene.speechIntro);
+    }
+
+    // === 第二步：老師按「👉 開始選擇」後，才顯示大幅分開的兩個選項 ===
+    revealChoicesBtn.addEventListener('click', () => {
+      initAudio();
+      if (!runtime.currentScene) return;
+      runtime.choicesRevealed = true;
+      revealChoicesBtn.style.display = 'none';
+
+      const scene = runtime.currentScene;
+      questionBanner.textContent = `❓ ${scene.question}`;
+
+      // 隨機左右分配，確保左邊固定亮黃框、右邊固定青藍框，視覺分明且距離寬闊
+      const shuffledOptions = [...scene.options].sort(() => Math.random() - 0.5);
+      const sideColors = ['#FFFF00', '#00E5FF'];
+
+      choicesRow.innerHTML = '';
+      shuffledOptions.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'choice-btn';
-        btn.style.setProperty('--btn-accent', opt.color);
+        btn.style.setProperty('--btn-accent', sideColors[idx % sideColors.length]);
         btn.innerHTML = `
           <div class="choice-icon">${opt.icon}</div>
           <div class="choice-text">${opt.text}</div>
         `;
-        btn.addEventListener('click', (e) => handleChoiceClick(opt, btn, e));
+        btn.addEventListener('click', () => handleChoiceClick(opt, btn));
         choicesRow.appendChild(btn);
       });
 
-      speakCantonese(scene.speechQuestion);
-    }
+      choicesRow.style.display = 'flex';
+      speakCantonese(scene.question);
+    });
 
-    function handleChoiceClick(opt, btnEl, event) {
-      if (runtime.isAnswered) return;
+    // === 第三步：按下選項後「先讀出選項內容，讀完先至揭曉對錯」 ===
+    function handleChoiceClick(opt, btnEl) {
+      if (runtime.isAnswered || runtime.isEvaluatingChoice) return;
       initAudio();
 
+      runtime.isEvaluatingChoice = true;
+
+      // 清除其他按鈕的狀態，先高亮並放大目前被點擊的選項
+      choicesRow.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('reading-now', 'gentle-shake');
+      });
+      btnEl.classList.add('reading-now');
+      questionBanner.textContent = `🗣️ 「${opt.text}」`;
+
+      // 第一階段語音：先清晰讀出學生所選選項的內容
+      speakCantonese(opt.spokenText, () => {
+        btnEl.classList.remove('reading-now');
+        evaluateSelectedOption(opt, btnEl);
+      });
+    }
+
+    function evaluateSelectedOption(opt, btnEl) {
       state.stats.totalAttempts += 1;
 
       if (opt.isCorrect) {
         runtime.isAnswered = true;
+        runtime.isEvaluatingChoice = false;
         state.stats.totalCompleted += 1;
         if (!runtime.hadMistakeThisQuestion) {
           state.stats.firstTryCorrect += 1;
@@ -1302,6 +1449,7 @@
         }
       } else {
         runtime.hadMistakeThisQuestion = true;
+        runtime.isEvaluatingChoice = false;
         saveState();
         updateStatsUI();
 
@@ -1332,8 +1480,11 @@
 
     document.getElementById('replay-speech-btn').addEventListener('click', () => {
       initAudio();
-      if (runtime.currentScene) {
-        speakCantonese(runtime.currentScene.speechQuestion);
+      if (!runtime.currentScene) return;
+      if (!runtime.choicesRevealed) {
+        speakCantonese(runtime.currentScene.speechIntro);
+      } else {
+        speakCantonese(runtime.currentScene.question);
       }
     });
 
@@ -1392,7 +1543,7 @@
       loadCurrentScene();
     });
 
-    // === 開始遊戲（先關閉封面，再安全初始化語音與題目） ===
+    // === 開始遊戲 ===
     function handleStartClass() {
       const overlay = document.getElementById('start-overlay');
       if (overlay) overlay.style.display = 'none';
@@ -1402,8 +1553,7 @@
       loadCurrentScene();
     }
 
-    const startGameBtn = document.getElementById('start-game-btn');
-    startGameBtn.addEventListener('click', handleStartClass);
+    document.getElementById('start-game-btn').addEventListener('click', handleStartClass);
 
     // === 教師設定面板控制 ===
     const teacherPanel = document.getElementById('teacher-panel');
@@ -1421,7 +1571,6 @@
     document.getElementById('teacher-trigger').addEventListener('click', openTeacherPanel);
     document.getElementById('open-setup-from-start-btn').addEventListener('click', openTeacherPanel);
 
-    // 課題多選按鈕
     document.querySelectorAll('.scene-toggle-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const sceneId = btn.dataset.scene;
