@@ -51,7 +51,7 @@
     }
 
     #start-overlay, #break-overlay, #teacher-panel, .panel-card {
-      touch-action: pan-y;
+      touch-action: manipulation;
       -webkit-overflow-scrolling: touch;
     }
 
@@ -152,7 +152,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 50;
+      z-index: 150;
       cursor: pointer;
     }
 
@@ -160,6 +160,7 @@
       width: 24px;
       height: 24px;
       fill: #FFFFFF;
+      pointer-events: none;
     }
 
     /* === 主遊戲舞台（全螢幕無捲動） === */
@@ -342,7 +343,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: safe center;
+      justify-content: center;
       z-index: 100;
       padding: 28px 20px 44px 20px;
       text-align: center;
@@ -388,8 +389,10 @@
     .start-actions-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 16px;
       justify-content: center;
+      position: relative;
+      z-index: 120;
     }
 
     .big-start-btn {
@@ -397,11 +400,12 @@
       color: #000000;
       border: none;
       border-radius: 24px;
-      padding: 18px 42px;
-      font-size: 1.7rem;
+      padding: 20px 46px;
+      font-size: 1.75rem;
       font-weight: 900;
       cursor: pointer;
       box-shadow: 0 0 30px rgba(255, 255, 0, 0.6);
+      -webkit-appearance: none;
     }
 
     .big-start-btn:active {
@@ -413,10 +417,11 @@
       color: #000000;
       border: none;
       border-radius: 24px;
-      padding: 18px 28px;
-      font-size: 1.3rem;
+      padding: 20px 30px;
+      font-size: 1.35rem;
       font-weight: 900;
       cursor: pointer;
+      -webkit-appearance: none;
     }
 
     /* === 教師設定面板 === */
@@ -561,11 +566,11 @@
 <body>
 
   <!-- 教師設定按鈕 -->
-  <div id="teacher-trigger" title="開啟教師設定">
+  <button type="button" id="teacher-trigger" title="開啟教師設定">
     <svg class="gear-icon" viewBox="0 0 24 24">
       <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
     </svg>
-  </div>
+  </button>
 
   <!-- 頂部狀態欄 -->
   <div id="top-bar">
@@ -573,7 +578,7 @@
       <div class="status-pill" id="topic-badge">主題 1 / 6</div>
     </div>
     <div id="progress-bar-container"></div>
-    <button id="replay-speech-btn">🔊 讀題目</button>
+    <button type="button" id="replay-speech-btn">🔊 讀題目</button>
   </div>
 
   <!-- 主遊戲舞台 -->
@@ -585,7 +590,7 @@
 
   <!-- 過關後「➡️ 下一題」特大按鈕 -->
   <div id="next-question-bar">
-    <button id="next-question-btn">➡️ 下一題</button>
+    <button type="button" id="next-question-btn">➡️ 下一題</button>
   </div>
 
   <!-- 開始畫面 -->
@@ -597,8 +602,8 @@
       揀出最有禮貌、最識交朋友嘅好方法啦！
     </div>
     <div class="start-actions-row">
-      <button class="big-start-btn" id="start-game-btn">開始上課</button>
-      <button class="secondary-setup-btn" id="open-setup-from-start-btn">⚙️ 教師選擇課題</button>
+      <button type="button" class="big-start-btn" id="start-game-btn">開始上課</button>
+      <button type="button" class="secondary-setup-btn" id="open-setup-from-start-btn">⚙️ 教師選擇課題</button>
     </div>
   </div>
 
@@ -608,7 +613,7 @@
     <div class="break-title">做得好！你係友善小天使！</div>
     <div class="break-stats" id="break-stats-text"></div>
     <div class="start-actions-row">
-      <button class="big-start-btn" id="continue-btn">再玩多一次</button>
+      <button type="button" class="big-start-btn" id="continue-btn">再玩多一次</button>
     </div>
   </div>
 
@@ -639,12 +644,12 @@
       <div class="setting-group">
         <label>1. 課堂練習的社交故事課題（可自由勾選或全選）</label>
         <div class="scene-check-grid" id="scene-selector">
-          <button class="scene-toggle-btn active" data-scene="greet">👋 1. 主動打招呼</button>
-          <button class="scene-toggle-btn active" data-scene="join">🧱 2. 禮貌問一齊玩</button>
-          <button class="scene-toggle-btn active" data-scene="queue">🛝 3. 排隊輪流玩</button>
-          <button class="scene-toggle-btn active" data-scene="comfort">🩹 4. 安慰跌倒朋友</button>
-          <button class="scene-toggle-btn active" data-scene="borrow">🖍️ 5. 有禮貌借東西</button>
-          <button class="scene-toggle-btn active" data-scene="share">🍪 6. 大方分享食物</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="greet">👋 1. 主動打招呼</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="join">🧱 2. 禮貌問一齊玩</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="queue">🛝 3. 排隊輪流玩</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="comfort">🩹 4. 安慰跌倒朋友</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="borrow">🖍️ 5. 有禮貌借東西</button>
+          <button type="button" class="scene-toggle-btn active" data-scene="share">🍪 6. 大方分享食物</button>
         </div>
       </div>
 
@@ -652,8 +657,8 @@
       <div class="setting-group">
         <label>2. 出題順序</label>
         <div class="btn-group" data-setting="orderMode">
-          <button class="opt-btn active" data-val="sequential">按故事順序（由第 1 題至第 6 題，適合大班循序講解）</button>
-          <button class="opt-btn" data-val="random">隨機抽題（適合小組搶答複習）</button>
+          <button type="button" class="opt-btn active" data-val="sequential">按故事順序（由第 1 題至第 6 題，適合大班循序講解）</button>
+          <button type="button" class="opt-btn" data-val="random">隨機抽題（適合小組搶答複習）</button>
         </div>
       </div>
 
@@ -661,8 +666,8 @@
       <div class="setting-group">
         <label>3. 答對後跳去下一題方式</label>
         <div class="btn-group" data-setting="advanceMode">
-          <button class="opt-btn" data-val="auto4">自動過關（答對後停留 4 秒自動跳去下一題）</button>
-          <button class="opt-btn active" data-val="manual">手動按「➡️ 下一題」按鈕（大班課推薦，方便老師延伸討論）</button>
+          <button type="button" class="opt-btn" data-val="auto4">自動過關（答對後停留 4 秒自動跳去下一題）</button>
+          <button type="button" class="opt-btn active" data-val="manual">手動按「➡️ 下一題」按鈕（大班課推薦，方便老師延伸討論）</button>
         </div>
       </div>
 
@@ -670,14 +675,14 @@
       <div class="setting-group">
         <label>4. 畫面背景對比主題</label>
         <div class="btn-group" data-setting="theme">
-          <button class="opt-btn active" data-val="dark">深黑高對比背景（低視能首選）</button>
-          <button class="opt-btn" data-val="light">亮白高對比背景（大螢幕投影推薦）</button>
+          <button type="button" class="opt-btn active" data-val="dark">深黑高對比背景（低視能首選）</button>
+          <button type="button" class="opt-btn" data-val="light">亮白高對比背景（大螢幕投影推薦）</button>
         </div>
       </div>
 
       <div class="panel-footer">
-        <button class="action-btn btn-reset" id="reset-stats-btn">重設統計</button>
-        <button class="action-btn btn-close" id="close-panel-btn">儲存並返回課堂</button>
+        <button type="button" class="action-btn btn-reset" id="reset-stats-btn">重設統計</button>
+        <button type="button" class="action-btn btn-close" id="close-panel-btn">儲存並返回課堂</button>
       </div>
     </div>
   </div>
@@ -708,18 +713,15 @@
         ],
         svg: `
           <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
-            <!-- 學校早晨陽光天空與草地背景 -->
             <rect width="800" height="290" fill="#38BDF8"/>
             <rect y="290" width="800" height="130" fill="#22C55E"/>
             <line x1="0" y1="290" x2="800" y2="290" stroke="#000000" stroke-width="6"/>
-            <!-- 閃亮太陽 -->
             <circle cx="105" cy="85" r="46" fill="#FACC15" stroke="#000000" stroke-width="6"/>
             <g stroke="#FACC15" stroke-width="7" stroke-linecap="round">
               <line x1="105" y1="18" x2="105" y2="30"/><line x1="105" y1="140" x2="105" y2="152"/>
               <line x1="38" y1="85" x2="50" y2="85"/><line x1="160" y1="85" x2="172" y2="85"/>
               <line x1="58" y1="38" x2="67" y2="47"/><line x1="143" y1="123" x2="152" y2="132"/>
             </g>
-            <!-- 學校校舍 -->
             <rect x="275" y="75" width="250" height="215" rx="14" fill="#FEF08A" stroke="#000000" stroke-width="6"/>
             <polygon points="255,80 400,18 545,80" fill="#EF4444" stroke="#000000" stroke-width="6"/>
             <circle cx="400" cy="54" r="18" fill="#FFFFFF" stroke="#000000" stroke-width="4"/>
@@ -728,14 +730,11 @@
             <rect x="305" y="115" width="52" height="52" rx="6" fill="#BAE6FD" stroke="#000000" stroke-width="5"/>
             <rect x="443" y="115" width="52" height="52" rx="6" fill="#BAE6FD" stroke="#000000" stroke-width="5"/>
 
-            <!-- 左邊小朋友（揮手微笑） -->
             <g transform="translate(195, 225)">
               <rect x="-32" y="42" width="64" height="82" rx="22" fill="#3B82F6" stroke="#000000" stroke-width="6"/>
-              <!-- 揮起的右手 -->
               <path d="M30 55 Q65 25 75 -5" stroke="#FDE68A" stroke-width="20" stroke-linecap="round" fill="none"/>
               <path d="M30 55 Q65 25 75 -5" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
               <circle cx="77" cy="-8" r="14" fill="#FDE68A" stroke="#000000" stroke-width="5"/>
-              <!-- 頭部 -->
               <circle cx="0" cy="0" r="46" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
               <path d="M-46 -6 Q-42 -52 0 -52 Q42 -52 46 -6 Q25 -22 0 -18 Q-25 -22 -46 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
               <circle cx="-15" cy="2" r="6" fill="#000000"/>
@@ -745,14 +744,11 @@
               <path d="M-16 18 Q0 34 16 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
             </g>
 
-            <!-- 右邊小朋友（開心揮手回應） -->
             <g transform="translate(605, 225)">
               <rect x="-32" y="42" width="64" height="82" rx="22" fill="#F97316" stroke="#000000" stroke-width="6"/>
-              <!-- 揮起的左手 -->
               <path d="M-30 55 Q-65 25 -75 -5" stroke="#FDE68A" stroke-width="20" stroke-linecap="round" fill="none"/>
               <path d="M-30 55 Q-65 25 -75 -5" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
               <circle cx="-77" cy="-8" r="14" fill="#FDE68A" stroke="#000000" stroke-width="5"/>
-              <!-- 頭部與雙馬尾 -->
               <circle cx="-46" cy="-18" r="18" fill="#1E293B" stroke="#000000" stroke-width="5"/>
               <circle cx="46" cy="-18" r="18" fill="#1E293B" stroke="#000000" stroke-width="5"/>
               <circle cx="0" cy="0" r="46" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
@@ -762,7 +758,6 @@
               <path d="M-16 18 Q0 34 16 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
             </g>
 
-            <!-- 對話氣泡 -->
             <rect x="275" y="138" width="110" height="48" rx="20" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
             <text x="330" y="170" font-size="26" font-weight="900" text-anchor="middle" fill="#000000">早晨！👋</text>
           </svg>
@@ -791,19 +786,713 @@
         ],
         svg: `
           <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
-            <!-- 課室遊戲角背景 -->
             <rect width="800" height="285" fill="#FEF3C7"/>
             <rect y="285" width="800" height="135" fill="#F59E0B"/>
             <line x1="0" y1="285" x2="800" y2="285" stroke="#000000" stroke-width="6"/>
-            <!-- 遊戲地墊 -->
             <ellipse cx="430" cy="345" rx="230" ry="52" fill="#38BDF8" stroke="#000000" stroke-width="5"/>
 
-            <!-- 彩色大積木城堡 -->
             <rect x="360" y="265" width="75" height="65" rx="8" fill="#EF4444" stroke="#000000" stroke-width="5"/>
             <rect x="442" y="265" width="75" height="65" rx="8" fill="#3B82F6" stroke="#000000" stroke-width="5"/>
             <rect x="398" y="200" width="80" height="65" rx="8" fill="#FACC15" stroke="#000000" stroke-width="5"/>
             <polygon points="392,200 438,152 484,200" fill="#22C55E" stroke="#000000" stroke-width="5"/>
 
-            <!-- 右邊正在砌積木的同學 -->
             <g transform="translate(585, 225)">
-              <rect x="-32" y="42" width="64" height
+              <rect x="-32" y="42" width="64" height="80" rx="22" fill="#A855F7" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Q20 -20 0 -16 Q-20 -20 -45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-14 18 Q0 30 14 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <g transform="translate(215, 220)">
+              <rect x="-32" y="42" width="64" height="85" rx="22" fill="#10B981" stroke="#000000" stroke-width="6"/>
+              <path d="M30 52 Q58 22 65 -8" stroke="#FDE68A" stroke-width="18" stroke-linecap="round" fill="none"/>
+              <path d="M30 52 Q58 22 65 -8" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Q20 -20 0 -16 Q-20 -20 -45 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-12 20 Q0 30 12 20" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <rect x="175" y="75" width="210" height="58" rx="24" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="280" y="113" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">可唔可以一齊玩？</text>
+          </svg>
+        `
+      },
+      {
+        id: 'queue',
+        shortTitle: '排隊輪流玩',
+        question: '游樂場好多人排隊玩滑梯，你應該點做？',
+        speechQuestion: '游樂場好多人排隊玩滑梯，你應該點做呀？',
+        praiseSpeech: '做得好！乖乖排隊輪流玩，既安全又守規矩！',
+        retrySpeech: '推開前面嘅同學好危險呀，試下排喺後面等一等啦！',
+        options: [
+          {
+            icon: '🚶‍♂️⏳',
+            text: '排喺後面，等一等輪流玩',
+            isCorrect: true,
+            color: '#00FF66'
+          },
+          {
+            icon: '🏃‍♂️💥',
+            text: '推開前面嘅同學衝上去',
+            isCorrect: false,
+            color: '#00E5FF'
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="295" fill="#7DD3FC"/>
+            <rect y="295" width="800" height="125" fill="#4ADE80"/>
+            <line x1="0" y1="295" x2="800" y2="295" stroke="#000000" stroke-width="6"/>
+
+            <rect x="470" y="105" width="24" height="190" fill="#EF4444" stroke="#000000" stroke-width="5"/>
+            <rect x="550" y="105" width="24" height="190" fill="#EF4444" stroke="#000000" stroke-width="5"/>
+            <rect x="460" y="90" width="125" height="28" rx="8" fill="#FACC15" stroke="#000000" stroke-width="5"/>
+            <path d="M574 115 Q635 230 745 285 L715 295 Q610 245 555 125 Z" fill="#F97316" stroke="#000000" stroke-width="5"/>
+
+            <g transform="translate(385, 225)">
+              <rect x="-28" y="38" width="56" height="75" rx="18" fill="#EC4899" stroke="#000000" stroke-width="5"/>
+              <circle cx="0" cy="0" r="40" fill="#FDE68A" stroke="#000000" stroke-width="5"/>
+              <path d="M-40 -5 Q-35 -44 0 -44 Q35 -44 40 -5 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="12" cy="2" r="5" fill="#000000"/>
+              <path d="M4 16 Q14 24 22 16" stroke="#000000" stroke-width="4" fill="none"/>
+            </g>
+
+            <g transform="translate(260, 225)">
+              <rect x="-28" y="38" width="56" height="75" rx="18" fill="#3B82F6" stroke="#000000" stroke-width="5"/>
+              <circle cx="0" cy="0" r="40" fill="#FDE68A" stroke="#000000" stroke-width="5"/>
+              <path d="M-40 -5 Q-35 -44 0 -44 Q35 -44 40 -5 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="12" cy="2" r="5" fill="#000000"/>
+              <path d="M4 16 Q14 24 22 16" stroke="#000000" stroke-width="4" fill="none"/>
+            </g>
+
+            <g transform="translate(135, 225)">
+              <rect x="-28" y="38" width="56" height="75" rx="18" fill="#FACC15" stroke="#000000" stroke-width="5"/>
+              <circle cx="0" cy="0" r="40" fill="#FDE68A" stroke="#000000" stroke-width="5"/>
+              <path d="M-40 -5 Q-35 -44 0 -44 Q35 -44 40 -5 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="12" cy="2" r="5" fill="#000000"/>
+              <path d="M4 16 Q14 24 22 16" stroke="#000000" stroke-width="4" fill="none"/>
+            </g>
+
+            <rect x="130" y="75" width="265" height="54" rx="22" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="262" y="111" font-size="26" font-weight="900" text-anchor="middle" fill="#000000">排隊輪流玩 ➡️</text>
+          </svg>
+        `
+      },
+      {
+        id: 'comfort',
+        shortTitle: '安慰跌倒朋友',
+        question: '好朋友唔小心跌倒喺地上喊，你會點做？',
+        speechQuestion: '好朋友唔小心跌倒喺地上喊，你會點做呀？',
+        praiseSpeech: '做得好！上前關心同扶起朋友，你真係好有愛心！',
+        retrySpeech: '朋友跌倒好痛㗎，唔好笑佢，過去扶起佢同安慰佢啦！',
+        options: [
+          {
+            icon: '🤝💛',
+            text: '行過去扶起佢，問：「你冇事嘛？」',
+            isCorrect: true,
+            color: '#00FF66'
+          },
+          {
+            icon: '😆👉',
+            text: '指住佢大笑，唔幫佢',
+            isCorrect: false,
+            color: '#00E5FF'
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="295" fill="#BAE6FD"/>
+            <rect y="295" width="800" height="125" fill="#86EFAC"/>
+            <line x1="0" y1="295" x2="800" y2="295" stroke="#000000" stroke-width="6"/>
+
+            <g transform="translate(500, 275)">
+              <ellipse cx="0" cy="45" rx="68" ry="26" fill="#F97316" stroke="#000000" stroke-width="5"/>
+              <circle cx="0" cy="-12" r="44" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-44 -18 Q-38 -58 0 -58 Q38 -58 44 -18 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <path d="M-24 -16 L-10 -10" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+              <path d="M24 -16 L10 -10" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="-15" cy="-4" r="5" fill="#000000"/>
+              <circle cx="15" cy="-4" r="5" fill="#000000"/>
+              <ellipse cx="-20" cy="12" rx="5" ry="9" fill="#38BDF8" stroke="#000000" stroke-width="2"/>
+              <ellipse cx="20" cy="12" rx="5" ry="9" fill="#38BDF8" stroke="#000000" stroke-width="2"/>
+              <path d="M-15 20 Q0 6 15 20" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <g transform="translate(275, 225)">
+              <rect x="-32" y="42" width="64" height="82" rx="22" fill="#3B82F6" stroke="#000000" stroke-width="6"/>
+              <path d="M30 58 L115 72" stroke="#FDE68A" stroke-width="20" stroke-linecap="round"/>
+              <path d="M30 58 L115 72" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="120" cy="73" r="14" fill="#FDE68A" stroke="#000000" stroke-width="5"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-12 18 Q0 28 12 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <path d="M400 120 C400 95 360 95 360 125 C360 150 400 175 400 175 C400 175 440 150 440 125 C440 95 400 95 400 120 Z" fill="#EF4444" stroke="#000000" stroke-width="5"/>
+          </svg>
+        `
+      },
+      {
+        id: 'borrow',
+        shortTitle: '有禮貌借東西',
+        question: '你想用同學枱面支藍色蠟筆畫畫，應該點做？',
+        speechQuestion: '你想用同學枱面支藍色蠟筆畫畫，應該點做呀？',
+        praiseSpeech: '做得好！先問准同學先至借用，好有禮貌呀！',
+        retrySpeech: '未問准就拎走人哋嘅嘢唔啱㗎，試下先問一聲同學啦！',
+        options: [
+          {
+            icon: '🙏🖍️',
+            text: '「唔該，可唔可以借支蠟筆俾我呀？」',
+            isCorrect: true,
+            color: '#00FF66'
+          },
+          {
+            icon: '🫳⚡',
+            text: '唔問一聲就自己拎走',
+            isCorrect: false,
+            color: '#00E5FF'
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="420" fill="#FDE68A"/>
+            <rect x="130" y="255" width="540" height="145" rx="18" fill="#D97706" stroke="#000000" stroke-width="6"/>
+            <rect x="115" y="240" width="570" height="32" rx="12" fill="#F59E0B" stroke="#000000" stroke-width="6"/>
+
+            <rect x="330" y="205" width="140" height="42" rx="6" fill="#FFFFFF" stroke="#000000" stroke-width="4"/>
+            <g transform="translate(380, 185) rotate(-18)">
+              <rect x="0" y="0" width="90" height="26" rx="5" fill="#2563EB" stroke="#000000" stroke-width="5"/>
+              <polygon points="90,0 118,13 90,26" fill="#60A5FA" stroke="#000000" stroke-width="5"/>
+            </g>
+
+            <g transform="translate(230, 165)">
+              <rect x="-32" y="42" width="64" height="40" rx="14" fill="#10B981" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-12 20 Q0 30 12 20" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <g transform="translate(570, 165)">
+              <rect x="-32" y="42" width="64" height="40" rx="14" fill="#EC4899" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-14 18 Q0 30 14 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <rect x="275" y="42" width="250" height="56" rx="24" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="400" y="79" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">唔該，可唔可以借？🙏</text>
+          </svg>
+        `
+      },
+      {
+        id: 'share',
+        shortTitle: '大方分享食物',
+        question: '茶點時間你有兩塊香噴噴嘅曲奇餅，好朋友冇帶茶點，你會點做？',
+        speechQuestion: '茶點時間你有兩塊曲奇餅，好朋友冇帶茶點，你會點做呀？',
+        praiseSpeech: '做得好！識得同好朋友一齊分享，兩個人都好開心！',
+        retrySpeech: '好朋友冇茶點好肚餓㗎，試下分一塊曲奇餅俾佢一齊食啦！',
+        options: [
+          {
+            icon: '🍪💖',
+            text: '分一塊俾好朋友，大家一齊食',
+            isCorrect: true,
+            color: '#00FF66'
+          },
+          {
+            icon: '🙅‍♂️🍪',
+            text: '自己食晒兩塊，唔分俾朋友',
+            isCorrect: false,
+            color: '#00E5FF'
+          }
+        ],
+        svg: `
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+            <rect width="800" height="420" fill="#E0F2FE"/>
+            <rect x="130" y="260" width="540" height="145" rx="18" fill="#FB923C" stroke="#000000" stroke-width="6"/>
+            <rect x="115" y="245" width="570" height="32" rx="12" fill="#FDBA74" stroke="#000000" stroke-width="6"/>
+
+            <ellipse cx="400" cy="242" rx="115" ry="26" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <g transform="translate(362, 224)">
+              <circle cx="0" cy="0" r="28" fill="#D97706" stroke="#000000" stroke-width="5"/>
+              <circle cx="-8" cy="-6" r="4" fill="#451A03"/><circle cx="9" cy="-4" r="4" fill="#451A03"/><circle cx="0" cy="9" r="4" fill="#451A03"/>
+            </g>
+            <g transform="translate(438, 224)">
+              <circle cx="0" cy="0" r="28" fill="#D97706" stroke="#000000" stroke-width="5"/>
+              <circle cx="-8" cy="-6" r="4" fill="#451A03"/><circle cx="9" cy="-4" r="4" fill="#451A03"/><circle cx="0" cy="9" r="4" fill="#451A03"/>
+            </g>
+
+            <g transform="translate(225, 165)">
+              <rect x="-32" y="42" width="64" height="42" rx="14" fill="#3B82F6" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#1E293B" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-15 18 Q0 32 15 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <g transform="translate(575, 165)">
+              <rect x="-32" y="42" width="64" height="42" rx="14" fill="#22C55E" stroke="#000000" stroke-width="6"/>
+              <circle cx="0" cy="0" r="45" fill="#FDE68A" stroke="#000000" stroke-width="6"/>
+              <path d="M-45 -6 Q-40 -50 0 -50 Q40 -50 45 -6 Z" fill="#451A03" stroke="#000000" stroke-width="5"/>
+              <circle cx="-14" cy="2" r="6" fill="#000000"/>
+              <circle cx="14" cy="2" r="6" fill="#000000"/>
+              <path d="M-15 18 Q0 32 15 18" stroke="#000000" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <rect x="285" y="42" width="230" height="54" rx="24" fill="#FFFFFF" stroke="#000000" stroke-width="5"/>
+            <text x="400" y="78" font-size="25" font-weight="900" text-anchor="middle" fill="#000000">一人一塊齊分享 🍪</text>
+          </svg>
+        `
+      }
+    ];
+
+    const STORAGE_KEY = 'friendship_angel_v2';
+
+    let state = {
+      settings: {
+        enabledScenes: ['greet', 'join', 'queue', 'comfort', 'borrow', 'share'],
+        orderMode: 'sequential',
+        advanceMode: 'manual',
+        theme: 'dark'
+      },
+      stats: {
+        totalCompleted: 0,
+        firstTryCorrect: 0,
+        totalAttempts: 0
+      }
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.settings) state.settings = { ...state.settings, ...parsed.settings };
+          if (parsed.stats) state.stats = { ...state.stats, ...parsed.stats };
+        }
+      } catch (e) {}
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    const runtime = {
+      activeQueue: [],
+      currentIndex: 0,
+      currentScene: null,
+      hadMistakeThisQuestion: false,
+      isAnswered: false,
+      autoNextTimer: null
+    };
+
+    const questionBanner = document.getElementById('question-banner');
+    const storyBox = document.getElementById('story-illustration-box');
+    const choicesRow = document.getElementById('choices-row');
+    const topicBadge = document.getElementById('topic-badge');
+    const progressBarContainer = document.getElementById('progress-bar-container');
+    const nextQuestionBar = document.getElementById('next-question-bar');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+
+    loadState();
+
+    // === 音效與廣東話語音引擎（加入完全容錯保護，避免 iPad Safari 卡死） ===
+    let audioCtx = null;
+
+    function initAudio() {
+      try {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      } catch (e) {}
+    }
+
+    function playSuccessChime() {
+      initAudio();
+      if (!audioCtx) return;
+      try {
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const now = audioCtx.currentTime + idx * 0.08;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.22, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.38);
+        });
+      } catch (e) {}
+    }
+
+    function playGentleErrorTone() {
+      initAudio();
+      if (!audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(240, now);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } catch (e) {}
+    }
+
+    let cantoneseVoice = null;
+    let speechTimer = null;
+
+    function loadCantoneseVoice() {
+      try {
+        if (!('speechSynthesis' in window)) return;
+        const voices = window.speechSynthesis.getVoices();
+        cantoneseVoice =
+          voices.find(v => v.lang === 'zh-HK' || v.lang === 'zh_HK') ||
+          voices.find(v => v.lang.toLowerCase().includes('hk') || v.name.toLowerCase().includes('cantonese') || v.name.includes('粵語') || v.name.includes('廣東話')) ||
+          null;
+      } catch (e) {}
+    }
+
+    try {
+      if ('speechSynthesis' in window) {
+        loadCantoneseVoice();
+        window.speechSynthesis.onvoiceschanged = loadCantoneseVoice;
+      }
+    } catch (e) {}
+
+    function speakCantonese(text) {
+      try {
+        if (!('speechSynthesis' in window) || !text) return;
+        if (speechTimer) clearTimeout(speechTimer);
+        window.speechSynthesis.cancel();
+        speechTimer = setTimeout(() => {
+          try {
+            if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+            const utter = new SpeechSynthesisUtterance(String(text));
+            utter.lang = 'zh-HK';
+            if (cantoneseVoice) utter.voice = cantoneseVoice;
+            utter.rate = 0.9;
+            utter.pitch = 1.15;
+            window.speechSynthesis.speak(utter);
+          } catch (err) {}
+        }, 50);
+      } catch (e) {}
+    }
+
+    // === 建立題目隊列 ===
+    function buildQuestionQueue() {
+      const enabled = state.settings.enabledScenes;
+      let list = SOCIAL_SCENES.filter(s => enabled.includes(s.id));
+      if (list.length === 0) list = [...SOCIAL_SCENES];
+
+      if (state.settings.orderMode === 'random') {
+        for (let i = list.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [list[i], list[j]] = [list[j], list[i]];
+        }
+      }
+      runtime.activeQueue = list;
+      runtime.currentIndex = 0;
+    }
+
+    // === 載入目前情境題目 ===
+    function loadCurrentScene() {
+      if (runtime.autoNextTimer) {
+        clearTimeout(runtime.autoNextTimer);
+        runtime.autoNextTimer = null;
+      }
+      nextQuestionBar.style.display = 'none';
+      runtime.hadMistakeThisQuestion = false;
+      runtime.isAnswered = false;
+
+      if (runtime.currentIndex >= runtime.activeQueue.length) {
+        showRoundComplete();
+        return;
+      }
+
+      const scene = runtime.activeQueue[runtime.currentIndex];
+      runtime.currentScene = scene;
+
+      topicBadge.textContent = `主題 ${runtime.currentIndex + 1} / ${runtime.activeQueue.length}：${scene.shortTitle}`;
+      updateProgressDots();
+
+      questionBanner.textContent = scene.question;
+      storyBox.innerHTML = scene.svg;
+
+      const shuffledOptions = [...scene.options].sort(() => Math.random() - 0.5);
+      choicesRow.innerHTML = '';
+
+      shuffledOptions.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'choice-btn';
+        btn.style.setProperty('--btn-accent', opt.color);
+        btn.innerHTML = `
+          <div class="choice-icon">${opt.icon}</div>
+          <div class="choice-text">${opt.text}</div>
+        `;
+        btn.addEventListener('click', (e) => handleChoiceClick(opt, btn, e));
+        choicesRow.appendChild(btn);
+      });
+
+      speakCantonese(scene.speechQuestion);
+    }
+
+    function handleChoiceClick(opt, btnEl, event) {
+      if (runtime.isAnswered) return;
+      initAudio();
+
+      state.stats.totalAttempts += 1;
+
+      if (opt.isCorrect) {
+        runtime.isAnswered = true;
+        state.stats.totalCompleted += 1;
+        if (!runtime.hadMistakeThisQuestion) {
+          state.stats.firstTryCorrect += 1;
+        }
+        saveState();
+        updateStatsUI();
+
+        btnEl.classList.add('correct-selected');
+        choicesRow.querySelectorAll('.choice-btn').forEach(b => {
+          if (b !== btnEl) b.classList.add('faded-out');
+        });
+
+        playSuccessChime();
+        try { if (navigator.vibrate) navigator.vibrate(50); } catch (e) {}
+
+        const rect = btnEl.getBoundingClientRect();
+        spawnHeartParticles(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+        questionBanner.textContent = `🌟 ${runtime.currentScene.praiseSpeech}`;
+        speakCantonese(runtime.currentScene.praiseSpeech);
+
+        updateProgressDots(true);
+
+        const isLast = (runtime.currentIndex + 1 >= runtime.activeQueue.length);
+        nextQuestionBtn.textContent = isLast ? '🏆 完成本課堂！查看獎勵' : '➡️ 下一題';
+        nextQuestionBar.style.display = 'block';
+
+        if (state.settings.advanceMode === 'auto4') {
+          runtime.autoNextTimer = setTimeout(() => {
+            advanceToNextQuestion();
+          }, 4000);
+        }
+      } else {
+        runtime.hadMistakeThisQuestion = true;
+        saveState();
+        updateStatsUI();
+
+        playGentleErrorTone();
+        btnEl.classList.remove('gentle-shake');
+        void btnEl.offsetWidth;
+        btnEl.classList.add('gentle-shake');
+
+        questionBanner.textContent = `💡 ${runtime.currentScene.retrySpeech}`;
+        speakCantonese(runtime.currentScene.retrySpeech);
+      }
+    }
+
+    function advanceToNextQuestion() {
+      if (runtime.autoNextTimer) {
+        clearTimeout(runtime.autoNextTimer);
+        runtime.autoNextTimer = null;
+      }
+      nextQuestionBar.style.display = 'none';
+      runtime.currentIndex += 1;
+      loadCurrentScene();
+    }
+
+    nextQuestionBtn.addEventListener('click', () => {
+      initAudio();
+      advanceToNextQuestion();
+    });
+
+    document.getElementById('replay-speech-btn').addEventListener('click', () => {
+      initAudio();
+      if (runtime.currentScene) {
+        speakCantonese(runtime.currentScene.speechQuestion);
+      }
+    });
+
+    // === 愛心與星星慶祝粒子 ===
+    function spawnHeartParticles(cx, cy) {
+      const symbols = ['💛', '❤️', '⭐', '👼', '✨'];
+      for (let i = 0; i < 14; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.textContent = symbols[i % symbols.length];
+        p.style.left = `${cx}px`;
+        p.style.top = `${cy}px`;
+        document.body.appendChild(p);
+
+        const angle = (Math.PI * 2 * i) / 14;
+        const dist = 90 + Math.random() * 140;
+        p.animate([
+          { transform: 'translate(-50%, -50%) scale(0.8)', opacity: 1 },
+          { transform: `translate(calc(-50% + ${Math.cos(angle) * dist}px), calc(-50% + ${Math.sin(angle) * dist - 60}px)) scale(1.4)`, opacity: 0 }
+        ], {
+          duration: 850,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+        }).onfinish = () => p.remove();
+      }
+    }
+
+    // === 進度小圓點 ===
+    function updateProgressDots(currentJustCompleted = false) {
+      progressBarContainer.innerHTML = '';
+      const total = runtime.activeQueue.length;
+      const completedCount = runtime.currentIndex + (currentJustCompleted ? 1 : 0);
+
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot' + (i < completedCount ? ' filled' : '');
+        progressBarContainer.appendChild(dot);
+      }
+    }
+
+    // === 課堂結束獎勵畫面 ===
+    function showRoundComplete() {
+      playSuccessChime();
+      speakCantonese('做得好！今日全部社交小故事都完成啦，大家都係友善小天使！');
+
+      document.getElementById('break-stats-text').innerHTML = `
+        本課堂完成社交主題：<strong>${runtime.activeQueue.length}</strong> 個<br/>
+        累計答對題數：<strong>${state.stats.totalCompleted}</strong> 題
+      `;
+      document.getElementById('break-overlay').style.display = 'flex';
+    }
+
+    document.getElementById('continue-btn').addEventListener('click', () => {
+      initAudio();
+      document.getElementById('break-overlay').style.display = 'none';
+      buildQuestionQueue();
+      loadCurrentScene();
+    });
+
+    // === 開始遊戲（先關閉封面，再安全初始化語音與題目） ===
+    function handleStartClass() {
+      const overlay = document.getElementById('start-overlay');
+      if (overlay) overlay.style.display = 'none';
+      initAudio();
+      loadCantoneseVoice();
+      buildQuestionQueue();
+      loadCurrentScene();
+    }
+
+    const startGameBtn = document.getElementById('start-game-btn');
+    startGameBtn.addEventListener('click', handleStartClass);
+
+    // === 教師設定面板控制 ===
+    const teacherPanel = document.getElementById('teacher-panel');
+
+    function openTeacherPanel() {
+      if (runtime.autoNextTimer) {
+        clearTimeout(runtime.autoNextTimer);
+        runtime.autoNextTimer = null;
+      }
+      applySettingsUI();
+      updateStatsUI();
+      teacherPanel.style.display = 'flex';
+    }
+
+    document.getElementById('teacher-trigger').addEventListener('click', openTeacherPanel);
+    document.getElementById('open-setup-from-start-btn').addEventListener('click', openTeacherPanel);
+
+    // 課題多選按鈕
+    document.querySelectorAll('.scene-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sceneId = btn.dataset.scene;
+        const list = state.settings.enabledScenes;
+        if (list.includes(sceneId)) {
+          if (list.length > 1) {
+            state.settings.enabledScenes = list.filter(id => id !== sceneId);
+          }
+        } else {
+          state.settings.enabledScenes.push(sceneId);
+        }
+        applySettingsUI();
+        saveState();
+      });
+    });
+
+    document.querySelectorAll('.btn-group').forEach(group => {
+      const key = group.dataset.setting;
+      group.querySelectorAll('.opt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state.settings[key] = btn.dataset.val;
+          applySettingsUI();
+          saveState();
+        });
+      });
+    });
+
+    function applySettingsUI() {
+      const s = state.settings;
+      document.body.classList.toggle('light-theme', s.theme === 'light');
+
+      document.querySelectorAll('.scene-toggle-btn').forEach(btn => {
+        btn.classList.toggle('active', s.enabledScenes.includes(btn.dataset.scene));
+      });
+
+      document.querySelectorAll('.btn-group').forEach(group => {
+        const key = group.dataset.setting;
+        const val = String(s[key]);
+        group.querySelectorAll('.opt-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.val === val);
+        });
+      });
+    }
+
+    function updateStatsUI() {
+      const st = state.stats;
+      document.getElementById('stat-total').textContent = st.totalCompleted;
+      document.getElementById('stat-first-try').textContent = st.firstTryCorrect;
+      const acc = st.totalAttempts > 0 ? Math.round((st.firstTryCorrect / st.totalAttempts) * 100) : 100;
+      document.getElementById('stat-accuracy').textContent = `${acc}%`;
+    }
+
+    document.getElementById('reset-stats-btn').addEventListener('click', () => {
+      state.stats.totalCompleted = 0;
+      state.stats.firstTryCorrect = 0;
+      state.stats.totalAttempts = 0;
+      saveState();
+      updateStatsUI();
+    });
+
+    document.getElementById('close-panel-btn').addEventListener('click', () => {
+      teacherPanel.style.display = 'none';
+      if (document.getElementById('start-overlay').style.display === 'none') {
+        buildQuestionQueue();
+        loadCurrentScene();
+      }
+    });
+
+    applySettingsUI();
+  </script>
+</body>
+</html>
